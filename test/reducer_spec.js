@@ -68,7 +68,8 @@ describe('reducer', () => {
         {id: 1, text: 'React', status: 'active'},
         {id: 2, text: 'Redux', status: 'active'},
         {id: 3, text: 'Immutable', status: 'completed'}
-      ]
+      ],
+      filter: 'all'
     }));
   });
 
