@@ -1,4 +1,11 @@
-import {Map} from 'immutable';
+import Immutable, {Map} from 'immutable';
+
+const initialState = Immutable.fromJS(
+  {
+    todos: [],
+    filter: 'all'
+  }
+)
 
 function findItemIndex(state, itemId) {
   return state.get('todos').findIndex(
@@ -62,7 +69,7 @@ function clearCompleted(state) {
 function addItem(state, text) {
   const itemId = state.get('todos').reduce((maxId, item) => Math.max(maxId,item.get('id')), 0) + 1;
   const newItem = Map({id: itemId, text: text, status: 'active'});
-  return state.update('todos', (todos) => todos.push(newItem));
+  return state.update('todos', (todos) => todos.push(newItem) );
 }
 
 function deleteItem(state, itemId) {
@@ -73,7 +80,7 @@ function deleteItem(state, itemId) {
   );
 }
 
-export default function(state = Map(), action) {
+export default function(state = initialState, action) {
   switch (action.type) {
     case 'SET_STATE':
       return setState(state, action.state);
