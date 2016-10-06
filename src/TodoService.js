@@ -1,9 +1,3 @@
-import firebase from 'firebase/app';
-import 'firebase/database';
-import 'firebase/auth'
-import 'todomvc-app-css/index.css';
-import Immutable from 'immutable';
-
 export default class TodoService {
   get _config() {
     return {
@@ -13,20 +7,20 @@ export default class TodoService {
     }
   }
 
-  constructor(store) {
-    this.store = store;
+  constructor(store, todoRepo) {
+    this._store = store;
+    this._todoRepo = todoRepo;
 
-    firebase.initializeApp(this._config);
-    firebase.auth().signInAnonymously();
-
-    let todosRef = firebase.database().ref('todos');
-    todosRef.on('value', this._setTodos.bind(this));
+    this._todoRepo.setAll([{text: 'React', status: 'active'}]);
+    this._todoRepo.subscribeToUpdates(this._setTodos.bind(this));
   }
 
-  _setTodos(data) {
-    const todos = data.val();
+  _handleStateChange() {
+    console.log('state change!');
+  }
 
-    this.store.dispatch({
+  _setTodos(todos) {
+   this._store.dispatch({
       type: 'SET_STATE',
       state: {
         todos: todos,
