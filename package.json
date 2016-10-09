@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server -d",
-    "test": "mocha --compilers js:babel-core/register --require ./test/setup.js 'test/**/*.@(js|jsx)'",
+    "test:base": "mocha --compilers js:babel-core/register --require ./test/setup.js",
+    "test:unit": "npm run test:base -- 'test/unit/**/*.@(js|jsx)'",
+    "test": "npm run test:unit -- ",
     "test:watch": "npm run test -- --watch --watch-extensions jsx"
   },
   "repository": {

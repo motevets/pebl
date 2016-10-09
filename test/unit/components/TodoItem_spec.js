@@ -1,6 +1,6 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import TodoItem from '../../src/components/TodoItem';
+import TodoItem from '../../../src/components/TodoItem';
 import {expect} from 'chai';
 
 const {renderIntoDocument,

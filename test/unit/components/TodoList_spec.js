@@ -1,6 +1,6 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import TodoList from '../../src/components/TodoList';
+import TodoList from '../../../src/components/TodoList';
 import {expect} from 'chai';
 import {List, Map} from 'immutable';
 

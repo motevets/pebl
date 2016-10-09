@@ -1,4 +1,4 @@
-import FakeTodosRepo from '../../src/repos/FakeTodosRepo';
+import FakeTodosRepo from '../../../src/repos/FakeTodosRepo';
 import {expect} from 'chai';
 
 describe(FakeTodosRepo, () => {

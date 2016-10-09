@@ -1,6 +1,6 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import TextInput from '../../src/components/TextInput';
+import TextInput from '../../../src/components/TextInput';
 import {expect} from 'chai';
 
 const {renderIntoDocument,

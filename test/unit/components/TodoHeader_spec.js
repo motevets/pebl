@@ -1,6 +1,6 @@
 import React from 'react';
 import TestUtils from 'react-addons-test-utils';
-import TodoHeader from '../../src/components/TodoHeader';
+import TodoHeader from '../../../src/components/TodoHeader';
 import {expect} from 'chai';
 
 const {renderIntoDocument,
