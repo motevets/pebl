@@ -29,6 +29,9 @@ module.exports = {
     hot: true
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin() // Wire in the hot loading plugin
+    new webpack.HotModuleReplacementPlugin(), // Wire in the hot loading plugin
+    new webpack.DefinePlugin({
+      REPOSITORY: 'localStorage',
+    })
   ]
 };
