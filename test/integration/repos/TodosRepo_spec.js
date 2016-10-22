@@ -10,13 +10,13 @@ function itBehavesLikeATodosRepo() {
     it('sets all of todos', function() {
       const todos = [ {text: 'text', status: 'active'} ];
       this.repo.setAll(todos);
-      expect(this.repo.list()).to.eql(todos);
+      return expect(this.repo.list()).to.eventually.eql(todos);
     });
   });
 
   describe('#list', function() {
     it('returns an empty array', function() {
-      expect(this.repo.list()).to.eql([]);
+      return expect(this.repo.list()).to.eventually.eql([]);
     });
   });
 
@@ -29,22 +29,29 @@ function itBehavesLikeATodosRepo() {
       expect(publishSpy).to.have.been.calledWith(todos);
     });
 
-    it('calls the publish function when more todos are added', function() {
+    it('calls the publish function when more todos are added', function(done) {
+      var callCount = 0;
+      function subscriber(emittedTodos) {
+        if(callCount++ == 0) {
+          expect(emittedTodos).to.eql([]);
+        } else {
+          expect(emittedTodos).to.eql(todos);
+          done();
+        }
+      }
+
       const todos = [ {text: 'text', status: 'active'} ];
-      const publishSpy = sinon.spy();
-      this.repo.subscribeToUpdates(publishSpy);
-      expect(publishSpy).to.have.been.calledWith([]);
+      this.repo.subscribeToUpdates(subscriber);
       this.otherRepo.setAll(todos);
-      expect(publishSpy).to.have.been.calledWith(todos);
     });
   });
 }
 
 import FakeTodosRepo from '../../../src/repos/FakeTodosRepo';
 
-const config = {};
+const config = {environment: 'test'};
 
-describe(FakeTodosRepo, function() {
+describe('FakeTodosRepo', function() {
   beforeEach(function() {
     this.repo = new FakeTodosRepo(config);
     this.otherRepo = new FakeTodosRepo(config);
@@ -56,9 +63,10 @@ describe(FakeTodosRepo, function() {
 
 import TodosRepo from '../../../src/repos/TodosRepo';
 
-describe.skip(TodosRepo, function() {
+describe('TodosRepo', function() {
   beforeEach(function() {
     this.repo = new TodosRepo(config);
+    this.otherRepo = new TodosRepo(config);
   });
 
   itBehavesLikeATodosRepo();

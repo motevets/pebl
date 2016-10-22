@@ -13,7 +13,7 @@ function _subscribeToUpdates(subscriber) {
 
 export default class FakeTodosRepo {
   list(){
-    return _todos;
+    return Promise.resolve(_todos);
   }
 
   setAll(todos){

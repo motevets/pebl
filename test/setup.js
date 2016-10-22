@@ -1,5 +1,6 @@
 import jsdom from 'jsdom';
 import chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
 import chaiImmutable from 'chai-immutable';
 import sinonChai from 'sinon-chai';
 
@@ -17,3 +18,4 @@ Object.keys(window).forEach((key) => {
 
 chai.use(chaiImmutable);
 chai.use(sinonChai);
+chai.use(chaiAsPromised);
