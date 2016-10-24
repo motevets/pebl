@@ -4,6 +4,7 @@ import sinon from 'sinon';
 function itBehavesLikeATodosRepo() {
   beforeEach(function() {
     this.repo.reset();
+    this.otherListRepo.reset();
   });
 
   describe('#setAll', function() {
@@ -45,16 +46,25 @@ function itBehavesLikeATodosRepo() {
       this.otherRepo.setAll(todos);
     });
   });
+
+  describe('configuration', function() {
+    it('uses the list specified', function() {
+      const todos = [ {text: 'text', status: 'active'} ];
+      this.repo.setAll(todos);
+      return expect(this.otherListRepo.list()).to.eventually.eql([]);
+    });
+  });
 }
 
 import FakeTodosRepo from '../../../src/repos/FakeTodosRepo';
 
-const config = {environment: 'test'};
+const config = {list: '_test'};
 
 describe('FakeTodosRepo', function() {
   beforeEach(function() {
     this.repo = new FakeTodosRepo(config);
     this.otherRepo = new FakeTodosRepo(config);
+    this.otherListRepo = new FakeTodosRepo({list: '_otherTest'});
   });
 
   itBehavesLikeATodosRepo();
@@ -67,6 +77,7 @@ describe('TodosRepo', function() {
   beforeEach(function() {
     this.repo = new TodosRepo(config);
     this.otherRepo = new TodosRepo(config);
+    this.otherListRepo = new TodosRepo({list: '_otherTest'});
   });
 
   itBehavesLikeATodosRepo();

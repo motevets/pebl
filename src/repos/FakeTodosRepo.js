@@ -1,30 +1,30 @@
-let _todos = [];
-const _subscribers = [];
-
-function _setAll(todos) {
-  _todos = todos;
-  _subscribers.forEach( (subscriber) => subscriber(todos) );
-}
-
-function _subscribeToUpdates(subscriber) {
-  subscriber(_todos);
-  _subscribers.push(subscriber);
-}
+let _store = {};
 
 export default class FakeTodosRepo {
+
+  constructor({list}) {
+    if(_store[list] === undefined) {
+      _store[list] = { todos: [], subscribers: [] };
+    }
+    this.store = _store[list];
+  }
+
   list(){
-    return Promise.resolve(_todos);
+    return Promise.resolve(this.store.todos);
   }
 
   setAll(todos){
-    _setAll(todos);
+    this.store.todos = todos;
+    this.store.subscribers.forEach(subscriber => subscriber(todos));
   }
 
   subscribeToUpdates(subscriber) {
-    _subscribeToUpdates(subscriber);
+    subscriber(this.store.todos);
+    this.store.subscribers.push(subscriber);
   }
 
   reset(){
-    _todos = [];
+    this.store.todos = [];
+    this.store.subscribers = [];
   }
 }

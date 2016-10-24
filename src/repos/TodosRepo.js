@@ -1,6 +1,5 @@
 import firebase from 'firebase';
 
-
 let firebaseConnected = false;
 
 const _firebaseConfig = {
@@ -24,12 +23,13 @@ function _dataSnapshotToArray(dataSnapshot) {
 }
 
 export default class TodosRepo {
-  constructor({environment}) {
+  constructor({list}) {
     _connectToFirebase();
-    this.ref = firebase.database().ref(`${environment}/todos`);
+    this.ref = firebase.database().ref(`${list}/todos`);
   }
 
   reset() {
+    this.ref.off();
     this.ref.set([]);
   }
 
